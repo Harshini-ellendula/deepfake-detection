@@ -1,0 +1,9 @@
+# Ignore datasets and large folders
+dataset/
+models/
+uploads/
+vedios/
+
+# Ignore temporary/system files
+*.log
+*.tmp
