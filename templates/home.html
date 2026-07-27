@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<title>SCANOVA AI | Digital Forensics</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+background:#020617;
+color:white;
+font-family:'Inter',sans-serif;
+overflow-x:hidden;
+}
+
+/* GRID BACKGROUND */
+
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background-image:
+linear-gradient(#0f172a 1px,transparent 1px),
+linear-gradient(90deg,#0f172a 1px,transparent 1px);
+background-size:60px 60px;
+opacity:.25;
+z-index:-2;
+}
+
+/* PARTICLES */
+
+.particles span{
+position:absolute;
+display:block;
+width:4px;
+height:4px;
+background:#00f2ff;
+animation:float 15s linear infinite;
+opacity:.7;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh) scale(0)}
+100%{transform:translateY(-10vh) scale(1)}
+}
+
+/* NAVBAR */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 80px;
+}
+
+.logo{
+font-family:'Orbitron';
+font-size:1.8rem;
+letter-spacing:3px;
+color:#00f2ff;
+}
+
+.logo span{
+color:white;
+}
+
+/* NAV BUTTONS */
+
+.nav-buttons a{
+margin-left:25px;
+text-decoration:none;
+font-weight:500;
+color:white;
+transition:.3s;
+}
+
+.nav-buttons a:hover{
+color:#00f2ff;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding-top:120px;
+}
+
+.hero h1{
+font-family:'Orbitron';
+font-size:4rem;
+margin-bottom:20px;
+}
+
+.hero span{
+color:#00f2ff;
+}
+
+.tagline{
+color:#94a3b8;
+font-size:1.2rem;
+max-width:700px;
+margin:auto;
+margin-bottom:40px;
+}
+
+/* BUTTON */
+
+.btn{
+padding:18px 60px;
+border:none;
+border-radius:40px;
+font-weight:bold;
+font-size:1rem;
+cursor:pointer;
+background:linear-gradient(90deg,#00f2ff,#00ffa2);
+color:black;
+transition:.3s;
+text-decoration:none;
+}
+
+.btn:hover{
+transform:scale(1.08);
+box-shadow:0 0 30px #00f2ff;
+}
+
+/* FEATURES */
+
+.features{
+margin-top:120px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+padding:0 120px;
+}
+
+.card{
+background:rgba(255,255,255,0.02);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:16px;
+padding:30px;
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 30px rgba(0,242,255,.2);
+}
+
+.card h3{
+font-family:'Orbitron';
+margin-bottom:10px;
+color:#00f2ff;
+}
+
+.card p{
+color:#94a3b8;
+font-size:.95rem;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:120px;
+text-align:center;
+color:#64748b;
+padding:40px;
+font-size:.9rem;
+}
+
+/* SCAN LINE */
+
+.scanline{
+position:absolute;
+width:100%;
+height:2px;
+background:#00f2ff;
+animation:scan 5s linear infinite;
+opacity:.2;
+}
+
+@keyframes scan{
+0%{top:0}
+100%{top:100%}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="scanline"></div>
+
+<!-- particles -->
+
+<div class="particles">
+
+<span style="left:10%;animation-delay:0s"></span>
+<span style="left:20%;animation-delay:3s"></span>
+<span style="left:35%;animation-delay:5s"></span>
+<span style="left:50%;animation-delay:7s"></span>
+<span style="left:65%;animation-delay:9s"></span>
+<span style="left:80%;animation-delay:11s"></span>
+<span style="left:90%;animation-delay:13s"></span>
+
+</div>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">🛡 SCAN<span>OVA</span></div>
+
+<div class="nav-buttons">
+
+<a href="/login">Login</a>
+<a href="/register">Register</a>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<h1>Trust Nothing.<br><span>Verify Everything.</span></h1>
+
+<p class="tagline">
+SCANOVA is an AI-powered digital forensic platform designed to detect deepfake media,
+synthetic imagery, and manipulated content using advanced neural networks and
+explainable AI analysis.
+</p>
+
+<a href="/detect" class="btn">Start AI Analysis</a>
+
+</div>
+
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="card">
+<h3>Deepfake Detection</h3>
+<p>
+Detect face manipulation and AI-generated media using convolutional neural networks trained on deepfake datasets.
+</p>
+</div>
+
+<div class="card">
+<h3>Forensic Heatmaps</h3>
+<p>
+Visualize suspicious regions through Grad-CAM explainable AI heatmaps highlighting manipulated areas.
+</p>
+</div>
+
+<div class="card">
+<h3>Forensic Report</h3>
+<p>
+SCANOVA generates forensic explanations describing AI indicators detected in manipulated images.
+</p>
+</div>
+
+<div class="card">
+<h3>AI Risk Assessment</h3>
+<p>
+The system assigns a confidence score and risk level to determine the likelihood of media manipulation.
+</p>
+</div>
+
+</div>
+
+<div class="footer">
+
+SCANOVA AI Digital Forensics Engine • Academic Research Prototype
+
+</div>
+
+</body>
+
+</html>

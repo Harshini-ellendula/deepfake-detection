@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>SCANOVA AI Forensic Scanner</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+background:#020617;
+color:white;
+font-family:'Inter',sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* animated grid background */
+
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background-image:
+linear-gradient(#0f172a 1px,transparent 1px),
+linear-gradient(90deg,#0f172a 1px,transparent 1px);
+background-size:60px 60px;
+opacity:.25;
+z-index:-1;
+}
+
+/* main panel */
+
+.panel{
+width:1100px;
+padding:40px;
+border-radius:20px;
+background:rgba(255,255,255,0.02);
+border:1px solid rgba(255,255,255,0.08);
+box-shadow:0 0 60px rgba(0,242,255,.1);
+backdrop-filter:blur(14px);
+}
+
+/* header */
+
+.logo{
+font-family:'Orbitron';
+font-size:1.6rem;
+color:#00f2ff;
+letter-spacing:2px;
+margin-bottom:20px;
+}
+
+/* upload */
+
+.upload{
+border:2px dashed #334155;
+padding:40px;
+border-radius:14px;
+text-align:center;
+transition:.3s;
+}
+
+.upload:hover{
+border-color:#00f2ff;
+background:rgba(0,242,255,.04);
+}
+
+/* button */
+
+.btn{
+margin-top:15px;
+width:100%;
+padding:15px;
+border:none;
+border-radius:10px;
+background:linear-gradient(90deg,#00f2ff,#00ffa2);
+font-weight:bold;
+cursor:pointer;
+font-size:1rem;
+}
+
+/* result section */
+
+.result{
+margin-top:40px;
+padding:25px;
+border-radius:14px;
+background:rgba(0,0,0,.4);
+border:1px solid #1e293b;
+}
+
+/* prediction */
+
+.verdict{
+font-family:'Orbitron';
+font-size:2rem;
+}
+
+.fake{
+color:#ff4d4d;
+text-shadow:0 0 15px #ff4d4d;
+}
+
+.real{
+color:#00ff9d;
+text-shadow:0 0 15px #00ff9d;
+}
+
+/* circular meter */
+
+.circle-box{
+position:relative;
+width:170px;
+height:170px;
+margin-top:15px;
+}
+
+svg{
+transform:rotate(-90deg);
+}
+
+circle{
+fill:none;
+stroke-width:12;
+}
+
+.bg{
+stroke:#1e293b;
+}
+
+.meter{
+stroke-dasharray:440;
+stroke-dashoffset:440;
+transition:stroke-dashoffset 2s ease;
+}
+
+.score{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:1.8rem;
+font-weight:bold;
+}
+
+/* risk badge */
+
+.risk{
+margin-top:10px;
+padding:6px 14px;
+display:inline-block;
+border-radius:20px;
+font-size:.85rem;
+font-weight:bold;
+}
+
+.high{background:#ff4d4d}
+.medium{background:#f59e0b}
+.low{background:#10b981}
+
+/* forensic */
+
+.forensic{
+margin-top:20px;
+background:#020617;
+border:1px solid #1e293b;
+border-radius:10px;
+padding:15px;
+color:#94a3b8;
+}
+
+/* heatmap */
+
+.heatmap img{
+margin-top:15px;
+width:100%;
+max-width:650px;
+border-radius:10px;
+}
+
+/* video frames */
+
+.frame-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+gap:15px;
+margin-top:10px;
+}
+
+.frame-grid img{
+width:100%;
+border-radius:8px;
+}
+
+/* scanning animation */
+
+.scanline{
+position:absolute;
+width:100%;
+height:2px;
+background:#00f2ff;
+animation:scan 3s linear infinite;
+opacity:.3;
+}
+
+@keyframes scan{
+0%{top:0}
+100%{top:100%}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="panel">
+
+<div class="logo">🛡 SCANOVA AI FORENSIC ENGINE</div>
+
+<form method="POST" enctype="multipart/form-data">
+
+<div class="upload">
+
+<input type="file" name="file" required>
+<p style="color:#64748b">Upload Image or Video</p>
+
+</div>
+
+<button class="btn">Analyze Media</button>
+
+</form>
+
+{% if prediction %}
+
+<div class="result">
+
+<div class="verdict {% if prediction=='Fake' %}fake{% else %}real{% endif %}">
+Prediction: {{ prediction }}
+</div>
+
+<!-- confidence circle -->
+
+<div class="circle-box">
+
+<svg width="170" height="170">
+
+<circle class="bg" r="70" cx="85" cy="85"></circle>
+
+<circle id="meter" class="meter"
+stroke="{% if prediction=='Fake' %}#ff4d4d{% else %}#00ff9d{% endif %}"
+r="70" cx="85" cy="85"></circle>
+
+</svg>
+
+<div id="score" class="score">0%</div>
+
+</div>
+
+<!-- risk level -->
+
+<div class="risk 
+{% if risk=='High' %}high
+{% elif risk=='Medium' %}medium
+{% else %}low{% endif %}">
+Risk Level: {{ risk }}
+</div>
+
+<div class="forensic">
+
+<strong>AI Forensic Analysis</strong>
+
+<p>{{ reason }}</p>
+
+</div>
+
+{% if heatmap %}
+
+<div class="heatmap">
+
+<h3>AI Focus Heatmap</h3>
+
+<img src="{{ heatmap }}">
+
+</div>
+
+{% endif %}
+
+{% if evidence_frames %}
+
+<h3>Suspicious Frames</h3>
+
+<div class="frame-grid">
+
+{% for frame in evidence_frames %}
+<img src="{{ frame }}">
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+</div>
+<div style="text-align:center">
+
+<a href="/" class="home-btn">Return to Home</a>
+
+<script>
+
+let score={{confidence}};
+let circle=document.getElementById("meter");
+let text=document.getElementById("score");
+
+let radius=70;
+let circumference=2*Math.PI*radius;
+
+circle.style.strokeDasharray=circumference;
+
+let current=0;
+
+let anim=setInterval(()=>{
+
+if(current>=score){
+clearInterval(anim);
+}
+
+text.innerHTML=current+"%";
+
+let offset=circumference-(current/100)*circumference;
+circle.style.strokeDashoffset=offset;
+
+current++;
+
+},20);
+
+</script>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
